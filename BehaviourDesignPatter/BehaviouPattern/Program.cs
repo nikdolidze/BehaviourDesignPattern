@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Strategy;
+using Strategy2;
+using System;
 using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
@@ -13,13 +15,41 @@ namespace BehaviouPattern
 
 
             Console.ReadLine();
-
-
+            Strategy2();
+            Strategy();
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
         }
+        public static void Strategy2()
+        {
 
+            var order = new Order2
+            {
+                ShippingDetails = new ShippingDetails
+                {
+                    OriginCountry = "Sweden",
+                    DestinationCountry = "Sweden"
+                },
+                SalesTaxStrategy = new SwedenSalesTaxStrategy()
+            };
+
+            order.LineItems.Add(new Item("CSHARP_SMORGASBORD", "C# Smorgasbord", 100m, ItemType.Literature), 1);
+            order.SelectedPayments.Add(new Payment { PaymentProvider = PaymentProvider.Invoice });
+            Console.WriteLine(order.GetTax());
+            order.FinalizeOrder();
+        }
+        public static void Strategy()
+        {
+            var order = new Order("test,", "nika", 5);
+            order.ExportService = new CSVExportService();
+            order.Export();
+
+            order.ExportService = new JsonExportService();
+            order.Export();
+
+            order.Export(new XmlExportService());
+        }
         public static void TemplateMethod3()
         {
             new TemplateMethod3dot3.Procces_Strategy(() => Console.WriteLine("Action Method")).Start();

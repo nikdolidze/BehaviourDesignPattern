@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Strategy\Strategy.csproj" />
     <ProjectReference Include="..\TemplateMethod2\TemplateMethod2.csproj" />
     <ProjectReference Include="..\TemplateMethod3\TemplateMethod3.csproj" />
     <ProjectReference Include="..\TemplateMethod\TemplateMethod.csproj" />
