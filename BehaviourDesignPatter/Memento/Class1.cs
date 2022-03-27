@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 /*
-It allows as to encapsulate request as objects. 
-The intent of pattern is to encapsulate a request as an object, thereby letting  you parametrize clients with different request, queue or log request, and support
-undoable operations
-
-Use CASES : 
-        1.When you whant to parameterize objects with an action to perform(we turnd an action into standalone object with we can pass around.
-        2.When you want to suppor unod
-        3.When you want to specify, queue and execute request ar different times. The lifetime of the command object can be independent of that original request
-        4.When you whant  to store a list of changes to pottentialy reapply later on.
-Pattern concencueces :
-        1.it decouples the class that invokes the operation from the one  that knows how to perform it 'Single reponsibility'
-        2.The command can be manipulated and extended any other object.
-        3.Command can be  assembled into a composite command
-        4.Existing implementation dont have to be changed to add new commands 
+it's all about capturing and externalizeing an objects internal state.
+The intent of this pattern is to capture and externalize an object's itnernal state so that the object can be restored to this state latter,without violating encapsulation.
+in other words this pattern allow us to store and restore private field and propertyvalues.
+Momento stores the internal satate  of the originator.The state should be protected  against acces by other bjects as much as possible
+Originator creates a Momento with a snapshot of its internal state it aslo use the Momento to restore its internal state
+Caretaker keeps the Memento safe 
+.
+add momento class to hold the internal state of our  addemployeetomanagerlistcommand
+    Pattern contequences :
+    1)it preserves encapsulation
+    2) simplifies originator
+   
 */
-namespace Command
+namespace Memento
 {
     public class Employee
     {
@@ -79,18 +76,30 @@ namespace Command
         void Execute();
         bool CanExecute();
         void Undo();
+  //      AddEmployeeToManagerListMemento CreateMemento();
     }
     //ConcreateCommand defines a bilding between a Reciever and action. it implements Execute by invoiking ther corresponding operations on Receiver
+    /// <summary>
+    /// ConcraetCommand and Originator
+    /// </summary>
     public class AddAmployeeToManagerList : ICommand
     {
         private readonly IEmployeeManagerRepository employeeManagerRepository;
-        private readonly int managerId;
-        private readonly Employee employee;
+        private  int managerId;
+        private  Employee employee;
         public AddAmployeeToManagerList(IEmployeeManagerRepository employeeManagerRepository, int managerId, Employee employee)
         {
             this.employeeManagerRepository = employeeManagerRepository;
             this.managerId = managerId;
             this.employee = employee;
+        }
+
+        public AddEmployeeToManagerListMemento CreateMemento() => new AddEmployeeToManagerListMemento(managerId, employee);
+        public void RestoreMemento(AddEmployeeToManagerListMemento empmanagerlistmomento)
+        {
+            managerId = empmanagerlistmomento.ManagerId;
+            employee = empmanagerlistmomento.Employee;
+
         }
         public bool CanExecute()
         {
@@ -107,23 +116,45 @@ namespace Command
             employeeManagerRepository.AddEmployee(managerId, employee);
         }
         public void Undo() => employeeManagerRepository.RemoveEmployee(managerId, employee);
+
     }
     //invoker
+    /// <summary>
+    /// Invoker && Caretaker
+    /// </summary>
     public class CommandManager
     {
-        private readonly Stack<ICommand> _commnads = new Stack<ICommand>();
+        private readonly Stack<AddEmployeeToManagerListMemento> _memento = new Stack<AddEmployeeToManagerListMemento>();
+        private AddAmployeeToManagerList _command;
 
         public void Invoke(ICommand command)
         {
+            if (_command == null)
+                _command = (AddAmployeeToManagerList)command;
+
             if (command.CanExecute())
                 command.Execute();
-            _commnads.Push(command);
+            _memento.Push(((AddAmployeeToManagerList)command).CreateMemento());
         }
 
         public void Undo()
         {
-            if (_commnads.Any())
-                _commnads.Pop()?.Undo();
+            if (_memento.Any())
+                _command.RestoreMemento(_memento.Pop());
+        }
+    }
+    /// <summary>
+    /// Memento 
+    /// </summary>
+    public class AddEmployeeToManagerListMemento
+    {
+        public int ManagerId { get; private set; }
+        public Employee Employee { get; private set; }
+
+        public AddEmployeeToManagerListMemento(int managerId, Employee employee)
+        {
+            ManagerId = managerId;
+            Employee = employee;
         }
     }
 }
