@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Strategy_Pattern_Creating_an_invoice.Business.Models;
+using Strategy2;
 
 namespace Strategy_Pattern_Creating_an_invoice.Business.Strategies.Invoice
 {
     public class PrintOnDemandInvoiceStrategy : IInvoiceStrategy
     {
-        public void Generate(Order order)
+        public void Generate(Order2 order)
         {
             using (var client = new HttpClient())
             {

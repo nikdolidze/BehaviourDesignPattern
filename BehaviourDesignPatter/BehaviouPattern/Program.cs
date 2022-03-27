@@ -1,4 +1,5 @@
-﻿using Strategy;
+﻿using Command;
+using Strategy;
 using Strategy2;
 using System;
 using TemplateMethod;
@@ -13,13 +14,22 @@ namespace BehaviouPattern
         static void Main(string[] args)
         {
 
-
+          
             Console.ReadLine();
+            Command();
             Strategy2();
             Strategy();
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        public static void Command()
+        {
+            CommandManager commandManager = new();
+            IEmployeeManagerRepository employeeManagerRepository = new EmployeeManagerRepository();
+            commandManager.
+                    Invoke(new AddAmployeeToManagerList(employeeManagerRepository, 3, new Employee(1, "")));
+            commandManager.Undo();
         }
         public static void Strategy2()
         {

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using Strategy_Pattern_Creating_an_invoice.Business.Models;
+using Strategy2;
 
 namespace Strategy_Pattern_Creating_an_invoice.Business.Strategies.Invoice
 {
     public class EmailInvoiceStrategy : InvoiceStrategy
     {
-        public override void Generate(Order order)
+        public override void Generate(Order2 order)
         {
             using (SmtpClient client = new SmtpClient("smtp.sendgrid.net", 587))
             {

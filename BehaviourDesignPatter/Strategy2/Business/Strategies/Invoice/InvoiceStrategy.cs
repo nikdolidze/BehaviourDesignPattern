@@ -1,13 +1,13 @@
-﻿using Strategy_Pattern_Creating_an_invoice.Business.Models;
+﻿using Strategy2;
 using System;
 
 namespace Strategy_Pattern_Creating_an_invoice.Business.Strategies.Invoice
 {
     public abstract class InvoiceStrategy : IInvoiceStrategy
     {
-        public abstract void Generate(Order order);
+        public abstract void Generate(Order2 order);
 
-        public string GenerateTextInvoice(Order order)
+        public string GenerateTextInvoice(Order2 order)
         {
             var invoice = $"INVOICE DATE: {DateTimeOffset.Now}{Environment.NewLine}";
 
