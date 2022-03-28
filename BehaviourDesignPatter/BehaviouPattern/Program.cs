@@ -1,4 +1,5 @@
 ﻿using Command;
+using Mediator;
 using Strategy;
 using Strategy2;
 using System;
@@ -13,8 +14,28 @@ namespace BehaviouPattern
     {
         static void Main(string[] args)
         {
+            TeamChatRoom chatRoom = new();
 
-          
+            var nika = new Loyer("nika");
+            var nika2 = new Loyer("nika2");
+            var nika3 = new AccountManager("nika3");
+            var nika4 = new AccountManager("nika4");
+            var nika5 = new AccountManager("nika5");
+
+            chatRoom.Registger(nika);
+            chatRoom.Registger(nika2);
+            chatRoom.Registger(nika3);
+            chatRoom.Registger(nika4);
+            chatRoom.Registger(nika5);
+
+
+            nika4.SendTo<Loyer>("accoutmanager");
+
+        //    nika.Send("nika3", "baro");
+
+       //     nika.Send("test");
+          //  nika3.Send("yest");
+
             Console.ReadLine();
             Command();
             Strategy2();

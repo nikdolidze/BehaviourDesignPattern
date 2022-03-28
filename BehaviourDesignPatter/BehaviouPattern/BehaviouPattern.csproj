@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Command\Command.csproj" />
+    <ProjectReference Include="..\Mediator\Mediator.csproj" />
     <ProjectReference Include="..\Strategy2\Strategy2.csproj" />
     <ProjectReference Include="..\Strategy\Strategy.csproj" />
     <ProjectReference Include="..\TemplateMethod2\TemplateMethod2.csproj" />
