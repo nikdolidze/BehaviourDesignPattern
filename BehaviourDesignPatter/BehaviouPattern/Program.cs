@@ -1,8 +1,13 @@
-﻿using Command;
+﻿using Chain_of_Responsibility_First_Look.Business;
+using Chain_of_Responsibility_First_Look.Business.Models;
+using ChainOfResposibility;
+using Command;
 using Mediator;
+using Payment_processing.Business.Models;
 using Strategy;
 using Strategy2;
 using System;
+using System.Globalization;
 using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
@@ -13,6 +18,83 @@ namespace BehaviouPattern
     internal class Program
     {
         static void Main(string[] args)
+        {
+
+            var order = new Order3();
+            order.LineItems.Add(new Item3("ATOMOSV", "Atomos Ninja V", 499), 2);
+            order.LineItems.Add(new Item3("EOSR", "Canon EOS R", 1799), 1);
+            order.SelectedPayments.Add(new Payment3
+            {
+                PaymentProvider = PaymentProvider3.Paypal,
+                Amount = 1000
+            });
+            order.SelectedPayments.Add(new Payment3
+            {
+                PaymentProvider = PaymentProvider3.Invoice,
+                Amount = 1797
+            });
+            Console.WriteLine(order.AmountDue);
+            Console.WriteLine(order.ShippingStatus);
+            /// TODO: Handle payment...
+
+            Console.WriteLine(order.AmountDue);
+            Console.WriteLine(order.ShippingStatus);
+            /////////////
+
+            var user = new User("Filip Ekberg",
+                "870101XXXX",
+                new RegionInfo("SE"),
+                new DateTimeOffset(1987, 01, 29, 00, 00, 00, TimeSpan.FromHours(2)));
+
+
+            Console.WriteLine(user.Age);
+            var processor = new UserProcessor();
+
+            var ressult = processor.Register(user);
+
+            Console.WriteLine(ressult);
+
+
+
+
+
+
+            Console.ReadLine();
+            ChainOfResponsibility();
+            Mediator();
+            Command();
+            Strategy2();
+            Strategy();
+            TemplateMethod3();
+            TemplateMtehod2();
+            TemplateMethod();
+        }
+        public static void ChainOfResponsibility()
+        {
+            var validDocument = new Document("Test", DateTimeOffset.UtcNow, true, true);
+
+            var inValidDocument = new Document("Test", DateTimeOffset.UtcNow, true, false);
+
+            var documentChainHandler = new DocumentTitleHandler();
+
+            documentChainHandler.SetSuccessor(new DocumentLastModifiedHandler())
+                                .SetSuccessor(new DocumentApprovedByLitigationandler())
+                                .SetSuccessor(new DocumentApprovedByManagmentHandler());
+
+
+            try
+            {
+                documentChainHandler.Handle(validDocument);
+                documentChainHandler.Handle(inValidDocument);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public static void Mediator()
         {
             TeamChatRoom chatRoom = new();
 
@@ -31,18 +113,6 @@ namespace BehaviouPattern
 
             nika4.SendTo<Loyer>("accoutmanager");
 
-        //    nika.Send("nika3", "baro");
-
-       //     nika.Send("test");
-          //  nika3.Send("yest");
-
-            Console.ReadLine();
-            Command();
-            Strategy2();
-            Strategy();
-            TemplateMethod3();
-            TemplateMtehod2();
-            TemplateMethod();
         }
         public static void Command()
         {

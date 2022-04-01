@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChainOfresposibility2\ChainOfresposibility2.csproj" />
+    <ProjectReference Include="..\ChainOfResposibility\ChainOfResposibility.csproj" />
     <ProjectReference Include="..\Command\Command.csproj" />
     <ProjectReference Include="..\Mediator\Mediator.csproj" />
     <ProjectReference Include="..\Strategy2\Strategy2.csproj" />
