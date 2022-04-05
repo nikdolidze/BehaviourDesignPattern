@@ -7,6 +7,7 @@ using ChainOfResposibility3;
 using ChainOfResposibility4;
 using Command;
 using Mediator;
+using Observer;
 using Payment_processing.Business.Models;
 using Strategy;
 using Strategy2;
@@ -26,13 +27,16 @@ namespace BehaviouPattern
 
 
 
+
+
+
             Console.ReadLine();
 
 
 
 
 
-
+            Observer();
             ChainOfResposibility4();
             ChainOfResposibility3();
             ChainOfResposibilitise2();
@@ -44,6 +48,18 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        public static void Observer()
+        {
+
+            TicketStockService ticketStockServive = new();
+            TicketResellerService ticketResellerServive = new();
+            OrderService orderService = new();
+
+            orderService.AddObserver(ticketResellerServive);
+            orderService.AddObserver(ticketStockServive);
+            orderService.CompleteTicketSale(1, 2);
+
         }
         public static void ChainOfResposibilitise2()
         {
@@ -88,7 +104,6 @@ namespace BehaviouPattern
 
             var ressult = processor.Register(user);
 
-            #endregion
             Console.WriteLine(ressult);
 
         }
