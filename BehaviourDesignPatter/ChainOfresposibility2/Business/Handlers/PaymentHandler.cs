@@ -7,25 +7,75 @@ using System.Threading.Tasks;
 
 namespace ChainOfresposibility2.Business.Handlers
 {
-    public abstract class PaymentHandler : IHandler<Order3>
+    public class PaymentHandler
     {
-        private IHandler<Order3> Next { get; set; }
-        public virtual void Handle(Order3 requst)
+        private readonly IList<IReceiver<Order3>> receivers;
+
+        public PaymentHandler(params IReceiver<Order3>[] receivers)
         {
-           if(Next == null && requst.AmountDue  > 0)
+            this.receivers = receivers;
+        }
+
+        public void Handle(Order3 order)
+        {
+            foreach (var receiver in receivers)
             {
-                throw new InvalidOperationException();
+                Console.WriteLine($"Running: {receiver.GetType().Name}");
+
+                if (order.AmountDue > 0)
+                {
+                    receiver.Handle(order);
+                }
+                else
+                {
+                    break;
+                }
             }
-            if (requst.AmountDue > 0)
+
+            if (order.AmountDue > 0)
             {
-                Next.Handle(requst); 
+                throw new InsufficientPaymentException();
+            }
+            else
+            {
+                order.ShippingStatus = ShippingStatus.ReadyForShippment;
             }
         }
 
-        public IHandler<Order3> SetNext(IHandler<Order3> next)
+        public void SetNext(IReceiver<Order3> next)
         {
-            Next = next;
-            return Next;
+            receivers.Add(next);
         }
     }
+    public class InsufficientPaymentException : Exception
+    {
+    }
 }
+
+    //public abstract class PaymentHandler : IHandler<Order3>
+    //{
+    //    private IHandler<Order3> Next { get; set; }
+    //    public virtual void Handle(Order3 requst)
+    //    {
+    //        Console.WriteLine($"Running : {GetType().Name}");
+    //        if (Next == null && requst.AmountDue > 0)
+    //        {
+    //            throw new InvalidOperationException();
+    //        }
+    //        if (requst.AmountDue > 0)
+    //        {
+    //            Next.Handle(requst);
+    //        }
+    //        else
+    //        {
+    //            requst.ShippingStatus = ShippingStatus.ReadyForShippment;
+    //        }
+    //    }
+
+    //    public IHandler<Order3> SetNext(IHandler<Order3> next)
+    //    {
+    //        Next = next;
+    //        return Next;
+    //    }
+    //}
+//}

@@ -1,6 +1,10 @@
 ﻿using Chain_of_Responsibility_First_Look.Business;
 using Chain_of_Responsibility_First_Look.Business.Models;
 using ChainOfResposibility;
+using ChainOfresposibility2.Business.Handlers;
+using ChainOfresposibility2.Business.Handlers.PaymentHandlers;
+using ChainOfResposibility3;
+using ChainOfResposibility4;
 using Command;
 using Mediator;
 using Payment_processing.Business.Models;
@@ -20,6 +24,30 @@ namespace BehaviouPattern
         static void Main(string[] args)
         {
 
+
+
+            Console.ReadLine();
+
+
+
+
+
+
+            ChainOfResposibility4();
+            ChainOfResposibility3();
+            ChainOfResposibilitise2();
+            ChainOfResponsibility();
+            Mediator();
+            Command();
+            Strategy2();
+            Strategy();
+            TemplateMethod3();
+            TemplateMtehod2();
+            TemplateMethod();
+        }
+        public static void ChainOfResposibilitise2()
+        {
+
             var order = new Order3();
             order.LineItems.Add(new Item3("ATOMOSV", "Atomos Ninja V", 499), 2);
             order.LineItems.Add(new Item3("EOSR", "Canon EOS R", 1799), 1);
@@ -37,6 +65,14 @@ namespace BehaviouPattern
             Console.WriteLine(order.ShippingStatus);
             /// TODO: Handle payment...
 
+            var handler = new PaymentHandler(
+                          new PayPalHandler(),
+                          new InvoiceHandler(),
+                          new CreditCardHandler());
+
+
+            handler.Handle(order);
+
             Console.WriteLine(order.AmountDue);
             Console.WriteLine(order.ShippingStatus);
             /////////////
@@ -52,22 +88,36 @@ namespace BehaviouPattern
 
             var ressult = processor.Register(user);
 
+            #endregion
             Console.WriteLine(ressult);
 
+        }
+        public static void ChainOfResposibility4()
+        {
+            var manager = new SeniorManager();
+            var vp = new VicePresitend();
+            var co = new COO();
 
 
+            manager.SerSuperviser(vp);
+            vp.SerSuperviser(co);
+
+            var expense = new ExpenseReport("nika", 5);
+            manager.ApprovedRequst(expense);
 
 
+        }
+        public static void ChainOfResposibility3()
+        {
+            var ide = new IDE(null);
+            var editor = new CodeEditor(ide);
+            var codeselection = new CodeSelectin(editor);
 
-            Console.ReadLine();
-            ChainOfResponsibility();
-            Mediator();
-            Command();
-            Strategy2();
-            Strategy();
-            TemplateMethod3();
-            TemplateMtehod2();
-            TemplateMethod();
+            editor.Handle("Ctrl+F");
+            codeselection.Handle("Ctrl+F");
+            codeselection.Handle("Ctrl+F4");
+
+
         }
         public static void ChainOfResponsibility()
         {

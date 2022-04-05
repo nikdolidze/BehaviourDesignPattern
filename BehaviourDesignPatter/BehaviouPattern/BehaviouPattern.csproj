@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChainOfresposibility2\ChainOfresposibility2.csproj" />
+    <ProjectReference Include="..\ChainOfResposibility3\ChainOfResposibility3.csproj" />
+    <ProjectReference Include="..\ChainOfResposibility4\ChainOfResposibility4.csproj" />
     <ProjectReference Include="..\ChainOfResposibility\ChainOfResposibility.csproj" />
     <ProjectReference Include="..\Command\Command.csproj" />
     <ProjectReference Include="..\Mediator\Mediator.csproj" />
