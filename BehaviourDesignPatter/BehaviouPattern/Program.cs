@@ -6,17 +6,22 @@ using ChainOfresposibility2.Business.Handlers.PaymentHandlers;
 using ChainOfResposibility3;
 using ChainOfResposibility4;
 using Command;
+using Interpreter;
+using Iterator;
 using Mediator;
 using Observer;
 using Payment_processing.Business.Models;
+using State;
 using Strategy;
 using Strategy2;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
 using TemplateMethod3not2;
+using Visitor;
 
 namespace BehaviouPattern
 {
@@ -24,6 +29,12 @@ namespace BehaviouPattern
     {
         static void Main(string[] args)
         {
+        
+            Console.ReadKey();
+
+
+
+
 
 
 
@@ -32,10 +43,10 @@ namespace BehaviouPattern
 
             Console.ReadLine();
 
-
-
-
-
+            Interpretor();
+            Visitor();
+            Iterator();
+            State();
             Observer();
             ChainOfResposibility4();
             ChainOfResposibility3();
@@ -48,6 +59,81 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        public static void Interpretor()
+        {
+            var expressions = new List<RomanExpression>
+                {
+                    new RomanHunderdExpression(),
+                    new RomanTenExpression(),
+                    new RomanOneExpression(),
+                };
+
+            var context = new RomanContext(5);
+            foreach (var expression in expressions)
+            {
+                expression.Interpret(context);
+            }
+            Console.WriteLine($"Translating Arabic numerals to Roman numerals: 5 = {context.Output}");
+
+            context = new RomanContext(81);
+            foreach (var expression in expressions)
+            {
+                expression.Interpret(context);
+            }
+            Console.WriteLine($"Translating Arabic numerals to Roman numerals: 81 = {context.Output}");
+
+            context = new RomanContext(733);
+            foreach (var expression in expressions)
+            {
+                expression.Interpret(context);
+            }
+            Console.WriteLine($"Translating Arabic numerals to Roman numerals: 733 = {context.Output}");
+
+        }
+        public static void Visitor()
+        {
+
+            var container = new Containter();
+
+            container.Customers.Add(new Customer("test", 1));
+            container.Customers.Add(new Customer("test2", 12));
+            container.Customers.Add(new Customer("test3", 123));
+            container.Employees.Add(new Visitor.Employee("test4", 1234));
+            container.Employees.Add(new Visitor.Employee("test5", 12345));
+
+            DiscountVisitor discount = new();
+            container.Accept(discount);
+
+            Console.WriteLine($"Total discount : {discount.TotalDicsountGiven}");
+
+
+        }
+        public static void Iterator()
+        {
+            PeopleCollection people = new();
+            people.Add(new Person("ge ", "nika"));
+            people.Add(new Person(" ka", "nika2"));
+            people.Add(new Person(" rus", "nika3"));
+            people.Add(new Person("en ", "nika4"));
+
+            var iterato = people.CrateIterator();
+        }
+        public static void State()
+        {
+            BankAccount bankAccount = new();
+            bankAccount.Deposite(100);
+            bankAccount.Withdrow(500);
+            bankAccount.Withdrow(100);
+
+            bankAccount.Deposite(2000);
+            bankAccount.Deposite(100);
+            bankAccount.Withdrow(3000);
+            bankAccount.Deposite(3000);
+            bankAccount.Deposite(100);
+
+
+
         }
         public static void Observer()
         {
@@ -184,7 +270,7 @@ namespace BehaviouPattern
             CommandManager commandManager = new();
             IEmployeeManagerRepository employeeManagerRepository = new EmployeeManagerRepository();
             commandManager.
-                    Invoke(new AddAmployeeToManagerList(employeeManagerRepository, 3, new Employee(1, "")));
+                    Invoke(new AddAmployeeToManagerList(employeeManagerRepository, 3, new Command.Employee(1, "")));
             commandManager.Undo();
         }
         public static void Strategy2()
