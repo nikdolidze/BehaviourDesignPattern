@@ -13,15 +13,17 @@ using Observer;
 using Payment_processing.Business.Models;
 using State;
 using State._2;
+using State3;
+using StateMachine;
 using Strategy;
 using Strategy2;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
-using TemplateMethod3not2;
 using Visitor;
 
 namespace BehaviouPattern
@@ -31,31 +33,14 @@ namespace BehaviouPattern
         static void Main(string[] args)
         {
 
-
-
-            Cat lordOfHouse = new Cat(typeof(Sleeping),10);
-            lordOfHouse.ReceiveFood(5);
-            lordOfHouse.FinishEating();
-            lordOfHouse.CompletePlan();
-            lordOfHouse.CompletePlan();
-            lordOfHouse.CompletePlan();
-            lordOfHouse.CompletePlan();
-
-
+         
 
             Console.ReadKey();
 
-
-
-
-
-
-
-
-
-
             Console.ReadLine();
-
+            StateMacine();
+            State3();
+            State2();
             Interpretor();
             Visitor();
             Iterator();
@@ -72,6 +57,159 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        public static void StateMacine()
+        {
+            var car2 = new Stateless.StateMachine<Car.StateCar, Car.Action>(Car.StateCar.Stopped);
+
+
+            car2.OnTransitioned(x => Console.WriteLine($"***********************************************Transitioned {x.Source},  {x.Destination}"));
+
+            car2.Configure(Car.StateCar.Stopped)
+                .Permit(Car.Action.Start, Car.StateCar.Started);
+
+            car2.Configure(Car.StateCar.Started)
+
+                .Permit(Car.Action.Accelarate, Car.StateCar.Running)
+                .PermitReentry(Car.Action.Start)
+                .Permit(Car.Action.Stop, Car.StateCar.Stopped)
+                .OnEntry(x => Console.WriteLine($"Source {x.Source} , {x.Destination}")).
+                 OnExit(x => Console.WriteLine($"exit {x.Source} , {x.Destination}"));
+
+            var triggerwithparam = car2.SetTriggerParameters<int>(Car.Action.Start);
+
+            car2.Configure(Car.StateCar.Running)
+                .SubstateOf(Car.StateCar.Started)
+                .OnEntryFrom(triggerwithparam, speed => Console.WriteLine($"Speed is  {speed}"))
+                .Permit(Car.Action.Stop, Car.StateCar.Stopped)
+                .InternalTransition(Car.Action.Start, () => Console.WriteLine("Car is already runnning"));
+
+
+
+
+            car2.Fire(triggerwithparam, 50);
+
+
+
+            Console.WriteLine($"CurrentState {car2.State}");
+
+            car2.Fire(Car.Action.Stop);
+
+            Console.WriteLine($"CurrentState {car2.State}");
+
+            car2.Fire(Car.Action.Start);
+
+            Console.WriteLine($"CurrentState {car2.State}");
+
+            car2.Fire(Car.Action.Accelarate);
+
+            Console.WriteLine($"CurrentState {car2.State}");
+            car2.Fire(Car.Action.Stop);
+
+            Console.WriteLine($"CurrentState {car2.State}");
+
+
+            var a = car2.GetPermittedTriggers();
+
+            Console.WriteLine("-------**********---------");
+
+            var car = new Car();
+            Console.WriteLine($"CurrentState {car.CurrentState}");
+
+            car.TakeAction(Car.Action.Start);
+
+            Console.WriteLine($"CurrentState {car.CurrentState}");
+
+            car.TakeAction(Car.Action.Start);
+
+            Console.WriteLine($"CurrentState {car.CurrentState}");
+
+            car.TakeAction(Car.Action.Accelarate);
+
+            Console.WriteLine($"CurrentState {car.CurrentState}");
+            car.TakeAction(Car.Action.Stop);
+
+            Console.WriteLine($"CurrentState {car.CurrentState}");
+
+
+
+        }
+        public static void State3()
+        {
+            string code = "1234";
+            var statee = SState.Locked;
+            var entry = new StringBuilder();
+            while (true)
+            {
+                switch (statee)
+                {
+                    case SState.Locked:
+                        entry.Append(Console.ReadKey().KeyChar);
+                        if (entry.ToString() == code)
+                        {
+                            statee = SState.Unloked;
+                            break;
+                        }
+                        if (!code.StartsWith(entry.ToString()))
+                        {
+                            statee = SState.Failed;
+                            break;
+                        }
+                        break;
+                    case SState.Failed:
+                        Console.CursorLeft = 0;
+                        Console.WriteLine("Failded");
+                        entry.Clear();
+                        statee = SState.Locked;
+                        break;
+                    case SState.Unloked:
+                        Console.CursorLeft = 0;
+                        Console.WriteLine("Unloked");
+                        break;
+
+                }
+            }
+
+
+
+
+            Console.Read();
+            var state = StateEnum.OffHook;
+            while (true)
+            {
+                Console.WriteLine("The pron is currently " + state);
+                Console.WriteLine("select a trigger :");
+                for (int i = 0; i < Demo.rules[state].Count; i++)
+                {
+                    var (t, h) = Demo.rules[state][i];
+                    Console.WriteLine($"{i} , {t}        {h}");
+                }
+                int input = int.Parse(Console.ReadLine());
+                var (_, s) = Demo.rules[state][input];
+                state = s;
+            }
+
+
+
+
+            Console.ReadLine();
+            var ls = new Switch();
+            ls.On();
+            ls.Off();
+            ls.Off();
+
+
+        }
+        public static void State2()
+        {
+
+            Cat lordOfHouse = new Cat(typeof(Sleeping), 10);
+            lordOfHouse.ReceiveFood(5);
+            lordOfHouse.FinishEating();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
         }
         public static void Interpretor()
         {

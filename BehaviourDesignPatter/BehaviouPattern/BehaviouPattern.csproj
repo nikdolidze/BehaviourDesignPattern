@@ -16,6 +16,8 @@
     <ProjectReference Include="..\Mediator\Mediator.csproj" />
     <ProjectReference Include="..\Observer\Observer.csproj" />
     <ProjectReference Include="..\State.2\State.2.csproj" />
+    <ProjectReference Include="..\State3\State3.csproj" />
+    <ProjectReference Include="..\StateMachine\StateMachine.csproj" />
     <ProjectReference Include="..\State\State.csproj" />
     <ProjectReference Include="..\Strategy2\Strategy2.csproj" />
     <ProjectReference Include="..\Strategy\Strategy.csproj" />
