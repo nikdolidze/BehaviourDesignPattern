@@ -12,6 +12,7 @@ using Mediator;
 using Observer;
 using Payment_processing.Business.Models;
 using State;
+using State._2;
 using Strategy;
 using Strategy2;
 using System;
@@ -29,7 +30,19 @@ namespace BehaviouPattern
     {
         static void Main(string[] args)
         {
-        
+
+
+
+            Cat lordOfHouse = new Cat(typeof(Sleeping),10);
+            lordOfHouse.ReceiveFood(5);
+            lordOfHouse.FinishEating();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
+            lordOfHouse.CompletePlan();
+
+
+
             Console.ReadKey();
 
 
