@@ -10,6 +10,9 @@ using Interpreter;
 using Iterator;
 using Mediator;
 using Observer;
+using Observer2;
+using Observer3;
+using Observer4;
 using Payment_processing.Business.Models;
 using State;
 using State._2;
@@ -33,11 +36,15 @@ namespace BehaviouPattern
         static void Main(string[] args)
         {
 
-         
+          
+
 
             Console.ReadKey();
 
             Console.ReadLine();
+            Observer4();
+            Observer3();
+            Observer2();
             StateMacine();
             State3();
             State2();
@@ -57,6 +64,49 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+
+        public static void Observer3()
+        {
+            var subject = new Subject("nika", 24);
+            var objserver = new Observerr3();
+            subject.Subscribe(objserver);
+            subject.UpdateUserAge(25);
+
+
+
+        }
+
+        public static void Observer2()
+        {
+            var alarm2 = new Alarm2();
+            alarm2.Subscribe(new FireStation2());
+            alarm2.Notify();
+            alarm2.Notify();
+            alarm2.Notify();
+            alarm2.Notify();
+            alarm2.Notify();
+
+
+            var alarm = new Alarm();
+            alarm.AddWatcher(new FireStation());
+            alarm.AddWatcher(new PoliceStation());
+            alarm.AddWatcher(new HospitalStation());
+            alarm.Notify();
+        }
+        public static void Observer4()
+        {
+            WeatherStation weatherStation = new WeatherStation();
+            NewsAgency newsAgency1 = new NewsAgency("Alpha");
+            weatherStation.Attach(newsAgency1);
+            NewsAgency newsAgency2 = new NewsAgency("Alpha2");
+            weatherStation.Attach(newsAgency2);
+
+            weatherStation.updqteTemprature(31.2f);
+            weatherStation.updqteTemprature(28f);
+            weatherStation.updqteTemprature(46.8f);
+            weatherStation.updqteTemprature(15.3f);
+
         }
         public static void StateMacine()
         {
