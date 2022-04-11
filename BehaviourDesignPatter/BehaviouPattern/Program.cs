@@ -6,6 +6,7 @@ using ChainOfresposibility2.Business.Handlers.PaymentHandlers;
 using ChainOfResposibility3;
 using ChainOfResposibility4;
 using Command;
+using Command2;
 using Interpreter;
 using Iterator;
 using Mediator;
@@ -28,6 +29,7 @@ using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
 using Visitor;
+using Visitor2;
 
 namespace BehaviouPattern
 {
@@ -35,12 +37,26 @@ namespace BehaviouPattern
     {
         static void Main(string[] args)
         {
+            var emailVisitor = new EmailVisitor();
+            var textvisitor = new TexsVisitor();
 
-          
+            var notificationsender1 = new InvoiceNotificationSender();
+            notificationsender1.Accept(emailVisitor);
+            notificationsender1.Accept(textvisitor);
+            notificationsender1.Send("INvoice");
+
+
+
+            var notificationsender2 = new MarketingNotification();
+            notificationsender2.Accept(textvisitor);
+            notificationsender2.Accept(textvisitor);
+            notificationsender2.Send("INvoice");
+
+
 
 
             Console.ReadKey();
-
+            Commandd2();
             Console.ReadLine();
             Observer4();
             Observer3();
@@ -65,7 +81,45 @@ namespace BehaviouPattern
             TemplateMtehod2();
             TemplateMethod();
         }
+        public static void Commandd2()
+        {
+            //craete receiver object
+            IFileSystemReceiver fs = new WindowsFileReceiver();
 
+            FileIncoker fileIncoker;
+
+            OpenFileCommand openFileCommand = new OpenFileCommand(fs);
+            fileIncoker = new FileIncoker(openFileCommand);
+            fileIncoker.Execute();
+
+            WriteFileCommand wr = new WriteFileCommand(fs);
+            fileIncoker = new FileIncoker(wr);
+            fileIncoker.Execute();
+
+
+            CloseFileCommand cl = new CloseFileCommand(fs);
+            fileIncoker = new FileIncoker(cl);
+            fileIncoker.Execute();
+
+            IFileSystemReceiver fs2 = new LInuxFileSystemReceiver();
+
+
+            FileIncoker fileIncoker2;
+
+            OpenFileCommand openFileCommand2 = new OpenFileCommand(fs2);
+            fileIncoker = new FileIncoker(openFileCommand2);
+            fileIncoker.Execute();
+
+            WriteFileCommand wr2 = new WriteFileCommand(fs2);
+            fileIncoker = new FileIncoker(wr2);
+            fileIncoker.Execute();
+
+
+            CloseFileCommand cl2 = new CloseFileCommand(fs2);
+            fileIncoker = new FileIncoker(cl2);
+            fileIncoker.Execute();
+
+        }
         public static void Observer3()
         {
             var subject = new Subject("nika", 24);
