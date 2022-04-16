@@ -1,4 +1,7 @@
-﻿using Chain_of_Responsibility_First_Look.Business;
+﻿#region MyRegion
+using BetterChainOfResponsibility.Implementations;
+using BetterChainOfResponsibility.Implementations.Handlers;
+using Chain_of_Responsibility_First_Look.Business;
 using Chain_of_Responsibility_First_Look.Business.Models;
 using ChainOfResposibility;
 using ChainOfresposibility2.Business.Handlers;
@@ -14,6 +17,7 @@ using Observer;
 using Observer2;
 using Observer3;
 using Observer4;
+using Observer5;
 using Payment_processing.Business.Models;
 using State;
 using State._2;
@@ -30,34 +34,40 @@ using TemplateMethod2;
 using TemplateMethod3;
 using Visitor;
 using Visitor2;
-
+#endregion
 namespace BehaviouPattern
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var emailVisitor = new EmailVisitor();
-            var textvisitor = new TexsVisitor();
+            var provider = new WeatherForecast();
+            provider.RegisterWeatherInfo(new WeatherInfo(1));
+            provider.RegisterWeatherInfo(new WeatherInfo(2));
+            provider.RegisterWeatherInfo(new WeatherInfo(3));
 
-            var notificationsender1 = new InvoiceNotificationSender();
-            notificationsender1.Accept(emailVisitor);
-            notificationsender1.Accept(textvisitor);
-            notificationsender1.Send("INvoice");
+            var observer = new WeatherForecastObserver();
+            observer.Subscribe(provider);
+            observer.Subscribe(new WeatherForecastObserver());
+            provider.RegisterWeatherInfo(new WeatherInfo(4));
+            provider.RegisterWeatherInfo(new WeatherInfo(5));
 
+            observer.Unsubscribe();
 
+            provider.RegisterWeatherInfo(new WeatherInfo(6));
 
-            var notificationsender2 = new MarketingNotification();
-            notificationsender2.Accept(textvisitor);
-            notificationsender2.Accept(textvisitor);
-            notificationsender2.Send("INvoice");
+            observer.Subscribe(provider);
+
+            provider.RegisterWeatherInfo(new WeatherInfo(7));
+
+            Console.ReadLine();
 
 
 
 
             Console.ReadKey();
             Commandd2();
-            Console.ReadLine();
+            ChainOfResposibilitities5();
             Observer4();
             Observer3();
             Observer2();
@@ -80,6 +90,43 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        public static void ChainOfResposibilitities5()
+        {
+            var initialRequest = new Requset(1, new List<string> { "This is the initial request" });
+
+            var aggregateHandler1 = new AggregateHandler(
+                new Handler1(),
+                new Handler2());
+
+            Console.WriteLine(string.Join("\n\r", aggregateHandler1.Handle(initialRequest).Messages));
+
+            var aggregateHandler2 = new AggregateHandler(
+                new Handler2(),
+                new Handler1());
+
+            Console.WriteLine();
+
+            Console.WriteLine(string.Join("\n\r", aggregateHandler2.Handle(initialRequest).Messages));
+
+            Console.ReadLine();
+        }
+        public void Visitor2()
+        {
+            var emailVisitor = new EmailVisitor();
+            var textvisitor = new TexsVisitor();
+
+            var notificationsender1 = new InvoiceNotificationSender();
+            notificationsender1.Accept(emailVisitor);
+            notificationsender1.Accept(textvisitor);
+            notificationsender1.Send("INvoice");
+
+
+
+            var notificationsender2 = new MarketingNotification();
+            notificationsender2.Accept(textvisitor);
+            notificationsender2.Accept(textvisitor);
+            notificationsender2.Send("Marketin");
         }
         public static void Commandd2()
         {
@@ -130,7 +177,6 @@ namespace BehaviouPattern
 
 
         }
-
         public static void Observer2()
         {
             var alarm2 = new Alarm2();

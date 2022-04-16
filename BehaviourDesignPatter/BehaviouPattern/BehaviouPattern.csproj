@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BetterChainOfResponsibility\BetterChainOfResponsibility.csproj" />
+    <ProjectReference Include="..\ChainOfResposibilities5\ChainOfResposibilities5.csproj" />
     <ProjectReference Include="..\ChainOfresposibility2\ChainOfresposibility2.csproj" />
     <ProjectReference Include="..\ChainOfResposibility3\ChainOfResposibility3.csproj" />
     <ProjectReference Include="..\ChainOfResposibility4\ChainOfResposibility4.csproj" />
@@ -18,6 +20,7 @@
     <ProjectReference Include="..\Observer2\Observer2.csproj" />
     <ProjectReference Include="..\Observer3\Observer3.csproj" />
     <ProjectReference Include="..\Observer4\Observer4.csproj" />
+    <ProjectReference Include="..\Observer5\Observer5.csproj" />
     <ProjectReference Include="..\Observer\Observer.csproj" />
     <ProjectReference Include="..\State.2\State.2.csproj" />
     <ProjectReference Include="..\State3\State3.csproj" />
