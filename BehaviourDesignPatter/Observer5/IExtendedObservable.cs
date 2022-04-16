@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Observer5
 {
-    internal class IExtendedObservable
+    namespace ExtendedObservable
     {
+        public interface IExtendedObservable<out T> : IObservable<T>
+        {
+            IReadOnlyCollection<T> Snapshot { get; }
+
+            IDisposable Subscribe(IObserver<T> observer, bool withHistory);
+        }
     }
 }

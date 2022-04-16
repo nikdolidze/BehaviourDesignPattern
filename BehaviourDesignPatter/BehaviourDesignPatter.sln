@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterChainOfResponsibility
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observer5", "Observer5\Observer5.csproj", "{86AC2D63-1A95-4562-A512-6FFFA5CB1B00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveExtension", "ReactiveExtension\ReactiveExtension.csproj", "{768A7728-12A2-4236-BEB9-EBB35F88FA94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -205,6 +207,10 @@ Global
 		{86AC2D63-1A95-4562-A512-6FFFA5CB1B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86AC2D63-1A95-4562-A512-6FFFA5CB1B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86AC2D63-1A95-4562-A512-6FFFA5CB1B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{768A7728-12A2-4236-BEB9-EBB35F88FA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768A7728-12A2-4236-BEB9-EBB35F88FA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768A7728-12A2-4236-BEB9-EBB35F88FA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768A7728-12A2-4236-BEB9-EBB35F88FA94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +244,7 @@ Global
 		{82738D71-280D-4EF7-8A2B-7DC6041076F9} = {FA28FA75-8988-4723-B9AC-76AABF03E3CE}
 		{57C02CF5-439D-4D1A-8A8C-DD7370656A69} = {FA28FA75-8988-4723-B9AC-76AABF03E3CE}
 		{86AC2D63-1A95-4562-A512-6FFFA5CB1B00} = {C2B178E6-E9B8-49C0-95D2-C5C1429F4BA6}
+		{768A7728-12A2-4236-BEB9-EBB35F88FA94} = {C2B178E6-E9B8-49C0-95D2-C5C1429F4BA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A91E1CC-B74C-4005-8C72-B9B2BAE84DFB}

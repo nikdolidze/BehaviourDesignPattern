@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Observer4\Observer4.csproj" />
     <ProjectReference Include="..\Observer5\Observer5.csproj" />
     <ProjectReference Include="..\Observer\Observer.csproj" />
+    <ProjectReference Include="..\ReactiveExtension\ReactiveExtension.csproj" />
     <ProjectReference Include="..\State.2\State.2.csproj" />
     <ProjectReference Include="..\State3\State3.csproj" />
     <ProjectReference Include="..\StateMachine\StateMachine.csproj" />

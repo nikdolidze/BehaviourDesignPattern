@@ -19,6 +19,7 @@ using Observer3;
 using Observer4;
 using Observer5;
 using Payment_processing.Business.Models;
+using ReactiveExtension;
 using State;
 using State._2;
 using State3;
@@ -28,7 +29,9 @@ using Strategy2;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using TemplateMethod;
 using TemplateMethod2;
 using TemplateMethod3;
@@ -39,33 +42,43 @@ namespace BehaviouPattern
 {
     internal class Program
     {
+        public static void StartBackgroundWork()
+        {
+            Console.WriteLine("Shows use of Start to start on a background thread:");
+            var o = Observable.Start(() =>
+            {
+                //This starts on a background thread.
+                Console.WriteLine("From background thread. Does not block main thread.");
+                Console.WriteLine("Calculating...");
+                Thread.Sleep(3000);
+                Console.WriteLine("Background work completed.");
+            }).Finally(() => Console.WriteLine("Main thread completed."));
+            Console.WriteLine("\r\n\t In Main Thread...\r\n");
+            o.Wait();   // Wait for completion of background operation.
+        }
         static void Main(string[] args)
         {
-            var provider = new WeatherForecast();
-            provider.RegisterWeatherInfo(new WeatherInfo(1));
-            provider.RegisterWeatherInfo(new WeatherInfo(2));
-            provider.RegisterWeatherInfo(new WeatherInfo(3));
 
-            var observer = new WeatherForecastObserver();
-            observer.Subscribe(provider);
-            observer.Subscribe(new WeatherForecastObserver());
-            provider.RegisterWeatherInfo(new WeatherInfo(4));
-            provider.RegisterWeatherInfo(new WeatherInfo(5));
 
-            observer.Unsubscribe();
 
-            provider.RegisterWeatherInfo(new WeatherInfo(6));
 
-            observer.Subscribe(provider);
+            StartBackgroundWork();
+            //var eventNumber = new EvenNumberObservable();
+            //var consoleLogObserver = new ConsoleLogObserver();
+            //eventNumber.Subscribe(consoleLogObserver);
 
-            provider.RegisterWeatherInfo(new WeatherInfo(7));
+            var evenNumber =new EvenNumberSubject();
+            evenNumber.Subscribe(Console.WriteLine);
+            evenNumber.Run();
 
+            Observable.Range(1, 100).Where(x => x % 2 == 0).Subscribe(Console.WriteLine);
             Console.ReadLine();
 
 
 
 
             Console.ReadKey();
+            Observer5();
             Commandd2();
             ChainOfResposibilitities5();
             Observer4();
@@ -90,6 +103,25 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }public static void Observer5()
+        {
+            var provider = new WeatherForecast();
+            provider.RegisterWeatherInfo(new WeatherInfo(1));
+            provider.RegisterWeatherInfo(new WeatherInfo(2));
+            provider.RegisterWeatherInfo(new WeatherInfo(3));
+
+            var observer = new WeatherForecastObserver();
+            observer.Subscribe(provider);
+            provider.RegisterWeatherInfo(new WeatherInfo(4));
+            provider.RegisterWeatherInfo(new WeatherInfo(5));
+
+            observer.Unsubscribe();
+
+            provider.RegisterWeatherInfo(new WeatherInfo(6));
+
+            observer.Subscribe(provider);
+
+            provider.RegisterWeatherInfo(new WeatherInfo(7));
         }
         public static void ChainOfResposibilitities5()
         {
