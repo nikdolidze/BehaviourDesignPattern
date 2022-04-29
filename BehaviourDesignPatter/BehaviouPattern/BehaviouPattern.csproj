@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AsyncPipline\AsyncPipline.csproj" />
     <ProjectReference Include="..\BetterChainOfResponsibility\BetterChainOfResponsibility.csproj" />
     <ProjectReference Include="..\ChainOfResposibilities5\ChainOfResposibilities5.csproj" />
     <ProjectReference Include="..\ChainOfresposibility2\ChainOfresposibility2.csproj" />
@@ -22,6 +23,7 @@
     <ProjectReference Include="..\Observer4\Observer4.csproj" />
     <ProjectReference Include="..\Observer5\Observer5.csproj" />
     <ProjectReference Include="..\Observer\Observer.csproj" />
+    <ProjectReference Include="..\Pipline\Pipline.csproj" />
     <ProjectReference Include="..\ReactiveExtension\ReactiveExtension.csproj" />
     <ProjectReference Include="..\State.2\State.2.csproj" />
     <ProjectReference Include="..\State3\State3.csproj" />
@@ -33,6 +35,7 @@
     <ProjectReference Include="..\TemplateMethod3\TemplateMethod3.csproj" />
     <ProjectReference Include="..\TemplateMethod\TemplateMethod.csproj" />
     <ProjectReference Include="..\Visitor2\Visitor2.csproj" />
+    <ProjectReference Include="..\Visitor3\Visitor3.csproj" />
     <ProjectReference Include="..\Visitor\Visitor.csproj" />
   </ItemGroup>
 

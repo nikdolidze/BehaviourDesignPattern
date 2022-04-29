@@ -19,6 +19,7 @@ using Observer3;
 using Observer4;
 using Observer5;
 using Payment_processing.Business.Models;
+using Pipline;
 using ReactiveExtension;
 using State;
 using State._2;
@@ -37,47 +38,48 @@ using TemplateMethod2;
 using TemplateMethod3;
 using Visitor;
 using Visitor2;
+using Visitor3;
 #endregion
+using Pipline.StronglyTypedPipelines;
+using AsyncPipline;
+using System.Threading.Tasks;
+
 namespace BehaviouPattern
 {
     internal class Program
     {
-        public static void StartBackgroundWork()
+   
+        async Task Test()
         {
-            Console.WriteLine("Shows use of Start to start on a background thread:");
-            var o = Observable.Start(() =>
-            {
-                //This starts on a background thread.
-                Console.WriteLine("From background thread. Does not block main thread.");
-                Console.WriteLine("Calculating...");
-                Thread.Sleep(3000);
-                Console.WriteLine("Background work completed.");
-            }).Finally(() => Console.WriteLine("Main thread completed."));
-            Console.WriteLine("\r\n\t In Main Thread...\r\n");
-            o.Wait();   // Wait for completion of background operation.
+            var pipeline = new ExampleAsyncPipeline();
+            var uri = new Uri("https://news.bbc.co.uk/");
+
+            var tempFile = await pipeline.ProcessAsync(uri);
+
+            Console.WriteLine($"{uri} saved to {tempFile}");
+
         }
-        static void Main(string[] args)
+
+        static  void Main(string[] args)
         {
+          
 
 
+            var motorBikeInsurance = new MotorBikeInsurance();
+            var carInsurance = new CarInsurance();
+            var quoteVisitor = new QuoteVisitor();
+            var customerVisitor = new CustomerCommunicationVisitor();
 
+            motorBikeInsurance.Accept(quoteVisitor);
+            carInsurance.Accept(quoteVisitor);
+            Console.WriteLine("-----------------------");
 
-            StartBackgroundWork();
-            //var eventNumber = new EvenNumberObservable();
-            //var consoleLogObserver = new ConsoleLogObserver();
-            //eventNumber.Subscribe(consoleLogObserver);
+            motorBikeInsurance.Accept(customerVisitor);
+            carInsurance.Accept(customerVisitor);
 
-            var evenNumber =new EvenNumberSubject();
-            evenNumber.Subscribe(Console.WriteLine);
-            evenNumber.Run();
-
-            Observable.Range(1, 100).Where(x => x % 2 == 0).Subscribe(Console.WriteLine);
             Console.ReadLine();
-
-
-
-
             Console.ReadKey();
+            Pipline();
             Observer5();
             Commandd2();
             ChainOfResposibilitities5();
@@ -103,7 +105,82 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
-        }public static void Observer5()
+        }
+        public static void Pipline()
+        {
+            Console.WriteLine("Event Pipeline Test");
+
+            var input = 49;
+            Console.WriteLine(string.Format("Input Value: {0} [{1}]", input, input.GetType().Name));
+
+            var pipeline = new EventStep<int, int>(new DoubleStep());
+            pipeline.OnInput += i => Console.WriteLine("Input event: " + i.ToString());
+            pipeline.OnOutput += o => Console.WriteLine("Output event: " + o.ToString());
+            var output = pipeline.Process(input);
+
+            Console.WriteLine(string.Format("Output Value: {0} [{1}]", output, output.GetType().Name));
+            Console.WriteLine();
+            static void BasicPipelineTest()
+            {
+                Console.WriteLine("Basic Pipeline Test");
+
+                var input = 49;
+                Console.WriteLine(string.Format("Input Value: {0} [{1}]", input, input.GetType().Name));
+
+                var pipeline = new BasicPipeline();
+                var output = pipeline.Process(input);
+
+                Console.WriteLine(string.Format("Output Value: {0} [{1}]", output, output.GetType().Name));
+                Console.WriteLine();
+            }
+            static void NestedPipelineTest()
+            {
+                Console.WriteLine("Nested Pipeline Test");
+
+                var input = 103;
+                Console.WriteLine(string.Format("Input Value: {0} [{1}]", input, input.GetType().Name));
+
+                var pipeline = new NestedPipeline();
+                var output = pipeline.Process(input);
+
+                Console.WriteLine(string.Format("Output Value: {0} [{1}]", output, output.GetType().Name));
+                Console.WriteLine();
+            }
+            static void BranchingPipelineTest()
+            {
+                Console.WriteLine("Branching Pipeline Test");
+
+                foreach (int input in new int[] { 1, 10, 100, 1000 })
+                {
+                    Console.WriteLine(string.Format("Input Value: {0} [{1}]", input, input.GetType().Name));
+
+                    var pipeline = new BranchingPipeline();
+                    var output = pipeline.Process(input);
+
+                    Console.WriteLine(string.Format("Output Value: {0} [{1}]", output, output.GetType().Name));
+                }
+
+                Console.WriteLine();
+            }
+            BasicPipelineTest();
+            NestedPipelineTest();
+            BranchingPipelineTest();
+        }
+        public static void ReacviceExtension()
+        {
+            var evenNumber = new EvenNumberSubject();
+            evenNumber.Subscribe(Console.WriteLine);
+            evenNumber.Run();
+
+            Observable.Range(1, 100).Where(x => x % 2 == 0).Subscribe(Console.WriteLine);
+
+            //var eventNumber = new EvenNumberObservable();
+            //var consoleLogObserver = new ConsoleLogObserver();
+            //eventNumber.Subscribe(consoleLogObserver);
+
+        
+        }
+        public static void Observer5()
         {
             var provider = new WeatherForecast();
             provider.RegisterWeatherInfo(new WeatherInfo(1));
