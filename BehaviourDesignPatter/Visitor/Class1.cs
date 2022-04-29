@@ -18,7 +18,6 @@ namespace Visitor
         {
             this.Name = name; this.AmountOrdered = amountOrder;
         }
-
         public void Accept(IVisitor visitor)
         {
             //  visitor.VisitCustomer(this);
