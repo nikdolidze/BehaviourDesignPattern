@@ -49,36 +49,18 @@ namespace BehaviouPattern
     internal class Program
     {
    
-        async Task Test()
-        {
-            var pipeline = new ExampleAsyncPipeline();
-            var uri = new Uri("https://news.bbc.co.uk/");
-
-            var tempFile = await pipeline.ProcessAsync(uri);
-
-            Console.WriteLine($"{uri} saved to {tempFile}");
-
-        }
+       
 
         static  void Main(string[] args)
         {
           
 
 
-            var motorBikeInsurance = new MotorBikeInsurance();
-            var carInsurance = new CarInsurance();
-            var quoteVisitor = new QuoteVisitor();
-            var customerVisitor = new CustomerCommunicationVisitor();
-
-            motorBikeInsurance.Accept(quoteVisitor);
-            carInsurance.Accept(quoteVisitor);
-            Console.WriteLine("-----------------------");
-
-            motorBikeInsurance.Accept(customerVisitor);
-            carInsurance.Accept(customerVisitor);
+          
 
             Console.ReadLine();
             Console.ReadKey();
+            Visitor3();
             Pipline();
             Observer5();
             Commandd2();
@@ -105,6 +87,30 @@ namespace BehaviouPattern
             TemplateMethod3();
             TemplateMtehod2();
             TemplateMethod();
+        }
+        async Task Test()
+        {
+            var pipeline = new ExampleAsyncPipeline();
+            var uri = new Uri("https://news.bbc.co.uk/");
+
+            var tempFile = await pipeline.ProcessAsync(uri);
+
+            Console.WriteLine($"{uri} saved to {tempFile}");
+
+        }
+        public static void Visitor3()
+        {
+            var motorBikeInsurance = new MotorBikeInsurance();
+            var carInsurance = new CarInsurance();
+            var quoteVisitor = new QuoteVisitor();
+            var customerVisitor = new CustomerCommunicationVisitor();
+
+            motorBikeInsurance.Accept(quoteVisitor);
+            carInsurance.Accept(quoteVisitor);
+            Console.WriteLine("-----------------------");
+
+            motorBikeInsurance.Accept(customerVisitor);
+            carInsurance.Accept(customerVisitor);
         }
         public static void Pipline()
         {

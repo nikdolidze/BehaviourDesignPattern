@@ -91,7 +91,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipline", "Pipline", "{F216
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pipline", "Pipline\Pipline.csproj", "{1CBFAABD-699A-4A8B-9E8B-628980277C08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncPipline", "AsyncPipline\AsyncPipline.csproj", "{E2560120-46E7-4163-B508-DC84CE7F0950}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncPipline", "AsyncPipline\AsyncPipline.csproj", "{E2560120-46E7-4163-B508-DC84CE7F0950}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visitor4", "Visitor4\Visitor4.csproj", "{61D45B2F-180E-4CBB-9081-23AAD1DE89D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -231,6 +233,10 @@ Global
 		{E2560120-46E7-4163-B508-DC84CE7F0950}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2560120-46E7-4163-B508-DC84CE7F0950}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2560120-46E7-4163-B508-DC84CE7F0950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D45B2F-180E-4CBB-9081-23AAD1DE89D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D45B2F-180E-4CBB-9081-23AAD1DE89D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D45B2F-180E-4CBB-9081-23AAD1DE89D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D45B2F-180E-4CBB-9081-23AAD1DE89D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -268,6 +274,7 @@ Global
 		{367ABD77-AB3D-4B30-B830-550514CBF0C2} = {39AB6B9D-1C8F-4E74-851B-A13F1EC20FBD}
 		{1CBFAABD-699A-4A8B-9E8B-628980277C08} = {F2166A42-435A-4060-9EC0-6D081C8524BA}
 		{E2560120-46E7-4163-B508-DC84CE7F0950} = {F2166A42-435A-4060-9EC0-6D081C8524BA}
+		{61D45B2F-180E-4CBB-9081-23AAD1DE89D7} = {39AB6B9D-1C8F-4E74-851B-A13F1EC20FBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A91E1CC-B74C-4005-8C72-B9B2BAE84DFB}
